@@ -10,7 +10,7 @@ jobs:
 
   build:
 
-    runs-on: [ubuntu-latest, linux]
+    runs-on: ubuntu-slim 
 
     steps:
     - uses: actions/checkout@v3
