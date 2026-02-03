@@ -9,13 +9,13 @@ from telegram.ext import Application, CommandHandler, ContextTypes
 def _get_poll_question(message_text: str | None) -> str:
     if message_text:
         return message_text
-    return os.getenv("POLL_QUESTION", "Pick a time:")
+    return os.getenv("POLL_QUESTION", "Lounau? ")
 
 
 def _get_poll_options() -> List[str]:
     raw = os.getenv(
         "POLL_OPTIONS",
-        "10:00,10:30,11:00,11:30,12:00,12:30,13:00",
+        "10:30,11:00,11:30,12:00",
     )
     options = [item.strip() for item in raw.split(",") if item.strip()]
     if len(options) < 2:
