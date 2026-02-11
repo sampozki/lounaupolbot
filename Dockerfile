@@ -15,7 +15,7 @@ COPY pyproject.toml uv.lock ./
 RUN uv sync --no-dev
 
 # ---- Final image ----
-FROM python:3.12-slim
+FROM gcr.io/distroless/python3
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
