@@ -6,7 +6,7 @@ LABEL Maintainer="sampozki"
 WORKDIR /app
 
 # Install uv
-RUN pip install --no-cache-dir uv
+COPY --from=ghcr.io/astral-sh/uv:0.10.2 /uv /uvx /bin/
 
 # Copy dependency files first (better caching)
 COPY pyproject.toml uv.lock ./
