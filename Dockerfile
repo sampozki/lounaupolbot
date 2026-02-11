@@ -30,4 +30,4 @@ ENV PATH="/app/.venv/bin:$PATH"
 
 COPY bot.py .
 
-CMD ["python", "bot.py"]
+CMD ["bot.py"]
