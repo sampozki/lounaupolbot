@@ -20,7 +20,7 @@ RUN uv pip install --system --no-cache -r requirements.txt
 # Copy app
 COPY bot.py .
 
-FROM gcr.io/distroless/python3-debian12
+FROM gcr.io/distroless/python3-debian12:3.12
 
 WORKDIR /app
 
