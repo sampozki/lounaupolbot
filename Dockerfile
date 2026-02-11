@@ -1,5 +1,5 @@
 
-FROM python:3.12-slim AS builder
+FROM python:3.12.3-slim AS builder
 
 LABEL Maintainer="sampozki"
 
@@ -10,22 +10,17 @@ COPY --from=ghcr.io/astral-sh/uv:0.10.2 /uv /uvx /bin/
 
 # Copy dependency files first (better caching)
 COPY pyproject.toml uv.lock ./
-
-# Create virtual environment + install deps
-RUN uv sync --no-dev
+RUN uv pip install --system .
 
 COPY bot.py .
 
-# ---- Final image ----
-FROM gcr.io/distroless/python3
-
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+FROM gcr.io/distroless/python3-debian12
 
 WORKDIR /app
 
-# Copy the virtual environment
-COPY --from=builder /app /app
+COPY --from=builder /usr/local/lib/python3.12 /usr/local/lib/python3.12
+COPY --from=builder /usr/local/bin /usr/local/bin
 
-ENTRYPOINT ["/app/.venv/bin/python"]
+COPY --from=builder /app/bot.py /app/bot.py
+
 CMD ["bot.py"]
