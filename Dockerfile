@@ -14,6 +14,8 @@ COPY pyproject.toml uv.lock ./
 # Create virtual environment + install deps
 RUN uv sync --no-dev
 
+COPY bot.py .
+
 # ---- Final image ----
 FROM gcr.io/distroless/python3
 
@@ -23,11 +25,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 WORKDIR /app
 
 # Copy the virtual environment
-COPY --from=builder /app/.venv /app/.venv
+COPY --from=builder /app /app
 
-# Make sure venv is used
-ENV PATH="/app/.venv/bin:$PATH"
-
-COPY bot.py .
-
+ENTRYPOINT ["/app/.venv/bin/python"]
 CMD ["bot.py"]
